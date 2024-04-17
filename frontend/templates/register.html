@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Registration</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 40% 60%;
+            height: 100vh;
+        }
+        
+        .left-column {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .right-column {
+            background-image: url('https://i.imgur.com/9lczHga.png'); /* Specify your image path here */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+        }
+        
+        .registration-box {
+            background-color: #000;
+            padding: 20px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #fff;
+            background-color: #333;
+            color: #fff;
+        }
+        
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #fff;
+            background-color: #333;
+            color: #fff;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        
+        .form-group input[type="submit"] {
+            background-color: blue;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none; /* Remove underline from link */
+        }
+        
+        .form-group input[type="submit"]:hover {
+            background-color: darkblue; /* Change color on hover */
+        }
+        
+        @media screen and (max-width: 768px) {
+            .container {
+                grid-template-columns: 100%;
+            }
+            
+            .right-column {
+                display: none; /* Hide image on small screens */
+            }
+            
+            .registration-box {
+                margin: auto;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-column">
+            <div class="registration-box">
+                <h2>Teacher Registration</h2>
+                <form method="POST" action="/register">
+                    <div class="form-group">
+                        <label for="full_name">Full Name:</label>
+                        <input type="text" id="full_name" name="full_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Role:</label>
+                        <select id="role" name="role" required>
+                            <option value="student">Student</option>
+                            <option value="teacher" selected>Teacher</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Register">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="right-column">
+            <!-- Right column background image -->
+        </div>
+    </div>
+</body>
+</html>

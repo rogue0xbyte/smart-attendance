@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 60% 40%;
+            height: 100vh;
+        }
+        
+        .left-column {
+            background-image: url('https://imgur.com/gB6yVrB'); /* Replace 'login-face.png' with the path to your image */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+        }
+        
+        .right-column {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .login-box {
+            background-color: #000; /* Changed to solid black */
+            border-radius: 0;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .login-title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #fff;
+            border-radius: 0;
+            background-color: #333;
+            color: #fff;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #007bff;
+        }
+        
+        .form-group .btn-login, .form-group .btn-register {
+            width: 100%;
+            padding: 10px;
+            color: #000; /* Black text color */
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+        }
+        
+        .form-group .btn-login {
+            background-color: #8000ff; /* Neon purple */
+        }
+        
+        .form-group .btn-login:hover {
+            background-color: #ff00ff; /* Brighter neon purple */
+        }
+        
+        .form-group .btn-register {
+            background-color: #00ffbf; /* Neon blue-green */
+        }
+        
+        .form-group .btn-register:hover {
+            background-color: #00ffff; /* Brighter neon blue-green */
+        }
+        
+        @media screen and (max-width: 768px) {
+            .container {
+                grid-template-columns: 100%;
+            }
+            
+            .left-column {
+                background-color: #000; /* Changed to solid black */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #ffffff;
+            }
+            
+            .login-box {
+                background-color: #000; /* Changed to solid black */
+                padding: 20px;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-column">
+            <!-- Left column content, only visible on desktop -->
+        </div>
+        <div class="right-column">
+            <div class="login-box">
+                <h2>Login</h2>
+                <form action="/login" method="post">
+                    <label for="id">Name:</label><br>
+                    <input type="text" id="id" name="id" required><br>
+                    <label for="password">Password:</label><br>
+                    <input type="password" id="password" name="password" required><br><br>
+                    <input type="submit" value="Login">
+                </form>
+                <p>Don't have an account? <a href="/register">Register here</a>.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

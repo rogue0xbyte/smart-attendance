@@ -1,0 +1,99 @@
+{
+  "info": {
+    "name": "FaceAPI FastAPI Testing",
+    "_postman_id": "7c96a862-56bc-4905-b7cc-eb9b5fd431c6",
+    "description": "Testing collection for FastAPI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"username\": \"example\", \"password\": \"password\", \"role\": \"user\"}"
+        },
+        "url": {
+          "raw": "{{url}}/login",
+          "protocol": "{{url}}",
+          "host": [],
+          "path": [
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Signup",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"username\": \"example\", \"password\": \"password\"}"
+        },
+        "url": {
+          "raw": "{{url}}/signup",
+          "protocol": "{{url}}",
+          "host": [],
+          "path": [
+            "signup"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/register?username=example",
+          "protocol": "{{url}}",
+          "host": [],
+          "path": [
+            "register"
+          ],
+          "query": [
+            {
+              "key": "username",
+              "value": "example"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Recognise",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "file",
+              "type": "file",
+              "src": "/path/to/file.jpg"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{url}}/recognise",
+          "protocol": "{{url}}",
+          "host": [],
+          "path": [
+            "recognise"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "protocolProfileBehavior": {}
+}

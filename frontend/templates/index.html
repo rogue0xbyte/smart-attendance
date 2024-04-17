@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload | SmartSurveillance</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;500&display=swap');
+
+        * {
+            font-family: 'Poppins'!important;
+        }
+        
+        body {
+            background: rgb(11,15,51);
+            background: radial-gradient(circle, rgba(11,15,51,1) 0%, rgba(34,33,87,1) 43%, rgba(34,29,59,1) 84%);
+            color: whitesmoke;
+        }
+
+        .glass {
+            background: rgba( 0, 0, 0, 0.2 );
+            box-shadow: 0 8px 32px 0 rgba( 44, 83, 100, 0.37 );
+            backdrop-filter: blur( 6px );
+            -webkit-backdrop-filter: blur( 6px );
+            border-radius: 10px;
+            border: 1px solid rgba( 255, 255, 255, 0.02 );
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .navbar {
+            margin: 0 auto;
+            width: 75%;
+            height: 75px;
+            display: flex;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .nav-logo {
+            float:left;
+            color: white;
+            margin: 0 auto;
+            margin-top: 7px;
+        }
+
+        .nav-links {
+            display: flex;
+            width:80%;
+            gap: 10px;
+            margin-right: 10px;
+            float:left;
+            margin-top: 22px;
+        }
+
+        .nav-links>a {
+            text-align: center;
+            margin: 0 auto;
+            transition: color .4s ease;
+        }
+
+        .nav-links>a:hover {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .uploaded-image {
+            margin-top: 20px;
+            max-width: 400px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="glass navbar">
+        <div class="nav-logo">
+            <p><a href="#">SmartSurveillance</a></p>
+        </div>
+        <div class="nav-links">
+            <a href="#">Dashboard</a>
+            <a href="#">Face Recognition</a>
+            <a href="#">Object Detection</a>
+            <a href="#">Loitering Detection</a>
+        </div>
+        
+    </div>
+    <br><br>
+    <br><br>
+    <div class="glass main">
+        
+        <center>
+        <h1>Image Upload</h1>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*">
+            <button type="submit">Upload</button>
+        </form>
+        {% if processed_image %}
+        <h1>Successfully Registered</h1>
+        <h2>Processed Image</h2>
+        <img src="{{ processed_image }}" class="uploaded-image">
+        {% endif %}
+        {% if name %}
+        <h2>Name</h2>
+        <p>{{ name }}</p>
+        {% endif %}
+        {% if Rollno %}
+        <h2>Roll No</h2>
+        <p>{{ Rollno }}</p>
+        {% endif %}
+        </center>
+    </div>
+</body>
+</html>

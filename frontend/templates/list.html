@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    background: rgb(13,0,36);
+    background: linear-gradient(300deg, rgba(13,0,36,1) 0%, rgba(45,9,121,1) 100%);
+    color: #eee;
+}
+
+nav {
+    background-color: #333;
+    color: #eee;
+    padding: 10px;
+    text-align: center;
+}
+
+nav div {
+    display: inline-block;
+}
+
+.buttons {
+    margin-top: 20px;
+    text-align: center;
+}
+
+button {
+    padding: 15px 30px; /* Increase padding for larger buttons */
+    margin: 10px; /* Add margin for spacing between buttons */
+    cursor: pointer;
+    background-color: #5e366e;
+    color: #eee;
+    border: none;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #7a4a93;
+}
+
+.container {
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    text-align: center;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    color: #eee;
+}
+
+form input[type="text"],
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #444;
+    color: #eee;
+}
+
+form textarea {
+    resize: vertical;
+}
+
+form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #eee;
+}
+
+form button[type="submit"] {
+    background-color: #8000ff;
+}
+
+form button[type="submit"]:hover {
+    background-color: #ff00ff;
+}
+
+/* New styles for the table */
+#classTable {
+    width: 100%;
+    border-collapse: collapse; /* Collapse the borders */
+    border: 2px solid #5e366e; /* Set the border color and width */
+}
+
+#classTable th,
+#classTable td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #5e366e; /* Set the border color and width for cells */
+}
+
+#classTable th {
+    background-color: #5e366e; /* Set header background color */
+    color: #eee;
+    text-align: center;
+}
+</style>
+  </head>
+  <body>
+    <nav>
+      <div id="welcome"></div>
+      <div id="clock"></div>
+    </nav>
+    <div class="buttons">
+      <button onclick="redirectTo('/classes/create')">Create Class</button>
+      <button onclick="redirectTo('/attendance/initialize')">
+        Initialize Attendance
+      </button>
+      <button onclick="redirectTo('/classes')">View Classes</button>
+    </div>
+
+    <script>function redirectTo(url) {
+    window.location.href = url;
+}
+  
+function updateTime() {
+    const now = new Date();
+    const timeOptions = { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
+    const timeString = now.toLocaleTimeString('en-US', timeOptions);
+    
+    const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const dateString = now.toLocaleDateString('en-US', dateOptions);
+    
+    document.getElementById('clock').innerText = `${dateString} - ${timeString}`;
+}
+  
+function generateWelcomeMessage() {
+    const greetings = ["Hello", "Hi", "Hey", "Welcome"];
+    const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+    return `${randomGreeting} there!`;
+}
+
+document.getElementById('welcome').innerText = generateWelcomeMessage();
+updateTime();
+setInterval(updateTime, 1000);
+
+// Handle form submission
+document.getElementById('classForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+    
+    // Get form values
+    const courseId = document.getElementById('courseId').value;
+    const teacherId = document.getElementById('teacherId').value;
+    const studentIds = document.getElementById('studentIds').value;
+    
+
+});
+</script>
+  </body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: rgb(0,0,0);
+            background: linear-gradient(166deg, rgba(0,0,0,1) 24%, rgba(127,58,180,1) 60%, rgba(69,70,252,1) 100%);
+            color: #ff00ff; /* Neon pink text color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+        
+        #camera {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 400px;
+            border-radius: 5px;
+            z-index: 1;
+        }
+        
+        .registration-box {
+            background-color: #000; /* Changed to solid black */
+            border-radius: 0;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            width: 50vw; /* Occupies half of the page width */
+            max-width: 600px; /* Max width for responsiveness */
+            position: relative;
+            z-index: 2; /* Ensure the registration box is above the video */
+        }
+        
+        .registration-title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .form-group label {
+            font-weight: bold;
+            color: #00ffbf; /* Neon blue-green text color */
+        }
+        
+        .form-group .capture-container {
+            position: relative;
+            width: 40px; /* Set width of the container */
+            height: 40px; /* Set height of the container */
+            border-radius: 50%;
+            background-color: #fff; /* White background */
+            color: #000; /* Black text color */
+            cursor: pointer;
+        }
+        
+        .form-group .capture-container:before {
+            content: "\f030"; /* Camera icon */
+            font-family: FontAwesome;
+            font-size: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .form-group .capture-container button {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #00ffbf; /* Neon blue-green button background */
+            color: #8000ff; /* Neon purple text color */
+            cursor: pointer;
+            display: none; /* Initially hide the capture button */
+        }
+        
+        .form-group .preview img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+        }
+        
+        .form-group .btn-upload {
+            width: 100%;
+            padding: 10px;
+            color: #8000ff; /* Neon purple text color */
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            background-color: #00ffbf; /* Neon blue-green button background */
+        }
+        
+        .form-group .btn-upload:hover {
+            background-color: #00ffff; /* Brighter neon blue-green button background on hover */
+        }
+        
+        @media screen and (max-width: 768px) {
+            .registration-box {
+                width: 80%; /* Occupies 80% of the page width on smaller screens */
+                padding: 20px; /* Reduce padding on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+   <video id="camera" autoplay></video>
+    <div class="registration-box">
+        <div class="registration-title"><h2>Click photo for head count!</h2></div>
+        <form action="/classes/{{course_id}}/upload_photo" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="capture-container" onclick="startCapture()">
+                    <button id="captureButton" onclick="captureImage()">Capture</button>
+                </div>
+                <div class="preview"></div>
+            </div>
+            <div class="form-group">
+                <input type="file" id="fileInput" name="file" style="display: none;">
+                <button type="submit" class="btn-upload">Upload Image</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        let video = document.getElementById('camera');
+        let captureButton = document.getElementById('captureButton');
+        let fileInput = document.getElementById('fileInput');
+        
+        function startCapture() {
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } })
+                .then(stream => {
+                    video.srcObject = stream;
+                    video.play();
+                    captureButton.style.display = 'block'; // Display the capture button
+                })
+                .catch(error => console.error('Error accessing camera:', error));
+        }
+        
+        function captureImage() {
+            let canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+            
+            let imageDataURL = canvas.toDataURL('image/png');
+            
+            let img = new Image();
+            img.src = imageDataURL;
+            
+            let preview = document.querySelector('.preview');
+            preview.innerHTML = ''; // Clear previous images
+            
+            preview.appendChild(img); // Append the captured image to the preview div
+            captureButton.style.display = 'none'; // Hide the capture button
+            
+            // Convert the captured image to a file
+            dataURLtoFile(imageDataURL, 'captured_image.png');
+        }
+        
+        function chooseFile() {
+            fileInput.click();
+        }
+        
+        fileInput.addEventListener('change', function() {
+            if (fileInput.files.length > 0) {
+                uploadForm.submit();
+            }
+        });
+        
+        // Function to convert data URL to a file
+        function dataURLtoFile(dataurl, filename) {
+            var arr = dataurl.split(','), 
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), 
+                n = bstr.length, 
+                u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            var file = new File([u8arr], filename, { type: mime });
+            document.getElementById('fileInput').files = [file];
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Course</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .scrollable {
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div id="welcome"></div>
+    <div id="clock"></div>
+  </nav>
+
+  <div class="container">
+    <div class="course-info">
+      <h2>Course Information</h2>
+      <div class="info-box">
+        <div class="info-item">
+          <label for="courseId">Course ID:</label>
+          <div id="courseId">{{course_id}}</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Student List</h2>
+    <ul>
+      {% for stud in students.split(", ") %}
+      <li>{{stud.strip()}}</li>
+      {% endfor %}
+    </ul>
+    <br/>
+    <a href="/courses/{{course_id}}/delete">Delete Course</a>
+  </div>
+
+  <script>
+    
+    // JavaScript for clock and welcome message
+    function updateTime() {
+        const now = new Date();
+        const timeOptions = { hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: true };
+        const timeString = now.toLocaleTimeString('en-US', timeOptions);
+        
+        const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const dateString = now.toLocaleDateString('en-US', dateOptions);
+        
+        document.getElementById('clock').innerText = `${dateString} - ${timeString}`;
+    }
+    
+    function generateWelcomeMessage() {
+        const greetings = ["Hello", "Hi", "Hey", "Welcome"];
+        const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+        return `${randomGreeting} there!`;
+    }
+
+    document.getElementById('welcome').innerText = generateWelcomeMessage();
+    updateTime();
+    setInterval(updateTime, 1000);
+  </script>
+</body>
+</html>

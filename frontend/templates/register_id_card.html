@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: rgb(0,0,0);
+            background: linear-gradient(166deg, rgba(0,0,0,1) 24%, rgba(127,58,180,1) 60%, rgba(69,70,252,1) 100%);
+            color: #ff00ff; /* Neon pink text color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .registration-box {
+            background-color: #000; /* Changed to solid black */
+            border-radius: 0;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            width: 50vw; /* Occupies half of the page width */
+            max-width: 600px; /* Max width for responsiveness */
+        }
+        
+        .registration-title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .form-group label {
+            font-weight: bold;
+            color: #00ffbf; /* Neon blue-green text color */
+        }
+        
+        .form-group .upload-container {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center the content horizontally */
+            background-color: #333; /* Dark gray background */
+            padding: 10px;
+            border-radius: 5px;
+            width: calc(40px + 30px); /* Width of upload-symbol plus 30px */
+        }
+        
+        .form-group .upload-container label {
+            color: #fff; /* White text color */
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .form-group .upload-container label:hover {
+            background-color: #555; /* Darker gray background on hover */
+        }
+        
+        .form-group .upload-container input[type="file"] {
+            display: none; /* Hide file input */
+        }
+        
+        .form-group .upload-container .upload-symbol {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px; /* Set width of the container */
+            height: 40px; /* Set height of the container */
+            border-radius: 5px;
+            background-color: #fff; /* White background */
+            color: #000; /* Black text color */
+        }
+        
+        .form-group .upload-container .upload-symbol:before {
+            content: "+"; /* Plus symbol */
+            font-size: 20px;
+        }
+        
+        .form-group .upload-container .preview img {
+            max-width: calc(40px + 30px); /* Max width equal to upload container */
+            max-height: 40px; /* Max height equal to upload symbol */
+            object-fit: contain; /* Maintain aspect ratio */
+            border-radius: 5px;
+        }
+        
+        .form-group .btn-upload {
+            width: 100%;
+            padding: 10px;
+            color: #8000ff; /* Neon purple text color */
+            border: none;
+            border-radius: 0;
+            cursor: pointer;
+            background-color: #00ffbf; /* Neon blue-green button background */
+        }
+        
+        .form-group .btn-upload:hover {
+            background-color: #00ffff; /* Brighter neon blue-green button background on hover */
+        }
+        
+        @media screen and (max-width: 768px) {
+            .registration-box {
+                width: 80%; /* Occupies 80% of the page width on smaller screens */
+                padding: 20px; /* Reduce padding on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-box">
+        <h2 class="registration-title">Upload Your Student ID Card</h2>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                {% if processed_image %}
+                    <h1>Successfully Registered</h1>
+                    <h2>Processed Image</h2>
+                    {% if name %}
+                    <h2>Name</h2>
+                    <p>{{ name }}</p>
+                    {% endif %}
+                    {% if Rollno %}
+                    <h2>Roll No</h2>
+                    <p>{{ Rollno }}</p>
+                    {% endif %}
+                    {% else %}
+                <div class="upload-container">
+                    <label for="student-id">
+                        <div class="upload-symbol"></div>
+                    </label>
+                    <input type="file" id="student-id" name="file" accept="image/*" required onchange="previewImage(event)">
+                    <div class="preview"></div>
+                </div>
+                    {% endif %}
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn-upload" >Upload Image</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+            var uploadSymbol = input.parentElement.querySelector('.upload-symbol');
+            var preview = input.parentElement.querySelector('.preview');
+            var file = input.files[0];
+
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    var img = document.createElement('img');
+                    img.src = event.target.result;
+                    img.style.width = "100%";
+                    img.style.height = "auto";
+                    uploadSymbol.style.display = 'none'; // Hide upload symbol
+                    preview.innerHTML = ''; // Clear any previous preview
+                    preview.appendChild(img); // Append the image preview
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>
